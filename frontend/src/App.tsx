@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { fetchQuestions } from "./API";
 import Questions from "./components/Questions";
-
+import { Difficulty } from "./API";
 const TOTAL_QUESTIONS = 10;
 function App() {
   const [loading, setLoading] = useState(false);
@@ -11,7 +11,9 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  const startQuiz = async () => {};
+  const startQuiz = async () => {
+    fetchQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
+  };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
 
