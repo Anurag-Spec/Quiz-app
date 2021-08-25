@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { fetchQuestions } from "./API";
 import Questions from "./components/Questions";
 
 const TOTAL_QUESTIONS = 10;
@@ -24,14 +25,14 @@ function App() {
       </button>
       <p className="score"> Score</p>
       <p>Loading Questions ....</p>
-      <Questions
+      {/* <Questions
         questionNr={number + 1}
         totalQuestions={TOTAL_QUESTIONS}
         question={questions[number].question}
         answers={(question[number], answers)}
         userAnswer={userAnswers ? userAnswers[number] : undefined}
         callback={checkAnswer}
-      />
+      /> */}
       <button className="next" onClick={nextQuestion}>
         Next Question
       </button>
