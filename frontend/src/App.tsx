@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { fetchQuestions } from "./API";
 import Questions from "./components/Questions";
 import { QuestionState, Difficulty } from "./API";
-import { GlobalStyle } from "./App.styles";
+import { GlobalStyle, Wrapper } from "./App.styles";
 
 export type AnswerObject = {
   question: string;
@@ -58,8 +58,8 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <div className="App">
-        <h1> Quiz </h1>
+      <Wrapper>
+        <h1> Anime Quiz </h1>
         {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
           <button className="start" onClick={startQuiz}>
             Start
@@ -86,7 +86,7 @@ function App() {
             Next Question
           </button>
         ) : null}
-      </div>
+      </Wrapper>
     </>
   );
 }
