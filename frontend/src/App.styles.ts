@@ -25,6 +25,7 @@ export const Wrapper = styled.div`
 
   > p {
     color: #fff;
+    font-weight: 1000;
   }
 
   .score {
