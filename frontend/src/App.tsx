@@ -12,7 +12,7 @@ function App() {
   const [gameOver, setGameOver] = useState(true);
 
   const startQuiz = async () => {
-    fetchQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
+    console.log(fetchQuestions(TOTAL_QUESTIONS, Difficulty.EASY));
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
