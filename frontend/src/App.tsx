@@ -3,7 +3,7 @@ import { fetchQuestions } from "./API";
 import Questions from "./components/Questions";
 import { QuestionState, Difficulty } from "./API";
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
