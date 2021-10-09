@@ -20,10 +20,14 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  const startQuiz = async () => {
+  const startQuiz = async (category: any) => {
     setLoading(true);
     setGameOver(false);
-    const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
+    const newQuestions = await fetchQuestions(
+      TOTAL_QUESTIONS,
+      Difficulty.EASY,
+      category
+    );
     setQuestions(newQuestions);
     setScore(0);
     setUserAnswers([]);
@@ -59,11 +63,39 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
-        <h1> Anime Quiz </h1>
+        <h1> The Quiz </h1>
         {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-          <button className="start" onClick={startQuiz}>
-            Start
-          </button>
+          <>
+            <h3>Choose a Category to start Playing</h3>
+            <button
+              value="31"
+              className="start"
+              onClick={(e) => startQuiz(e.currentTarget.value)}
+            >
+              Anime
+            </button>
+            <button
+              value="9"
+              className="start"
+              onClick={(e) => startQuiz(e.currentTarget.value)}
+            >
+              General Knowledge
+            </button>
+            <button
+              value="10"
+              className="start"
+              onClick={(e) => startQuiz(e.currentTarget.value)}
+            >
+              Films
+            </button>
+            <button
+              value="18"
+              className="start"
+              onClick={(e) => startQuiz(e.currentTarget.value)}
+            >
+              Computers
+            </button>
+          </>
         ) : null}
 
         {!gameOver ? <p className="score"> Score: {score}</p> : null}
