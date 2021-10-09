@@ -3,8 +3,8 @@ import { fetchQuestions } from "./API";
 import Questions from "./components/Questions";
 import { QuestionState, Difficulty } from "./API";
 import { GlobalStyle, Wrapper } from "./App.styles";
-import firebase from "firebase/compat/app";
-import firebaseui from "firebaseui";
+import firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 export type AnswerObject = {
   question: string;
@@ -16,37 +16,39 @@ export type AnswerObject = {
 firebase.initializeApp({
   apiKey: "AIzaSyDhqSLqvBhdlNjTV1tDUmNIXAkKJ1pdPio",
   authDomain: "quiz-app-23324.firebaseapp.com",
+  projectId: "quiz-app-23324",
+  storageBucket: "quiz-app-23324.appspot.com",
+  messagingSenderId: "276253502318",
+  appId: "1:276253502318:web:5464f631c50e368e07ef7f",
 });
 
 const TOTAL_QUESTIONS = 10;
 function App() {
-  var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-  var uiConfig = {
-    callbacks: {
-      signInSuccessWithAuthResult: function (
-        authResult: any,
-        redirectUrl: any
-      ) {
-        return true;
-      },
-      uiShown: function () {},
-    },
-    signInFlow: "popup",
-    signInSuccessUrl: "<url-to-redirect-to-on-success>",
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    ],
-  };
-
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
   const [number, setNumber] = useState(0);
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [user, setUser] = useState<any>(null);
   const [isSignedIn, setisSignedIn] = useState(false);
+  let uiConfig: any = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+    callbacks: {
+      signInSuccess: () => false,
+    },
+  };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      setisSignedIn(!!user);
+      setUser(user);
+    });
+  }, [isSignedIn]);
 
   const startQuiz = async (category: any) => {
     setLoading(true);
@@ -79,12 +81,6 @@ function App() {
       setUserAnswers((prev) => [...prev, answerObject]);
     }
   };
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      setisSignedIn(!!user);
-    });
-  }, [isSignedIn]);
 
   const nextQuestion = () => {
     const nextQuestion = number + 1;
@@ -134,7 +130,11 @@ function App() {
               </>
             ) : null}
 
-            {!gameOver ? <p className="score"> Score: {score}</p> : null}
+            {!gameOver && number === TOTAL_QUESTIONS - 1 ? (
+              <p className="score">
+                Congratulations {user?.displayName} your score is: {score}
+              </p>
+            ) : null}
             {loading && <p>Loading Questions ....</p>}
             {!loading && !gameOver && (
               <Questions
@@ -157,7 +157,10 @@ function App() {
           </Wrapper>
         </>
       ) : (
-        ui.start("#firebaseui-auth-container", uiConfig)
+        <StyledFirebaseAuth
+          uiConfig={uiConfig}
+          firebaseAuth={firebase.auth()}
+        />
       )}
     </>
   );

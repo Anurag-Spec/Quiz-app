@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-import BGimage from "./Images/chris-liverani.jpg";
+import BGimage from "./Images/image2.jpg";
 
 export const GlobalStyle = createGlobalStyle`
 html{
@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
   }
 
   .score {
-    color: #fff;
+    color: #000;
     fonmt-size: 2rem;
     margin: 0;
   }
