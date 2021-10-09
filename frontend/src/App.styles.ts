@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
     margin: 0;
   }
 
-  h1 {
+  h1, h3 {
     font-family: "Zilla Slab";
     background-image: linear-gradient(180deg, #fff, #87f1ff);
     background-size: 100%;
