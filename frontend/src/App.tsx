@@ -98,7 +98,7 @@ function App() {
             <h1> The Quiz </h1>
             {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
               <>
-                <h3>Choose a Category to start Playing</h3>
+                <h3>Choose a Category to start playing</h3>
                 <button
                   value="31"
                   className="start"
